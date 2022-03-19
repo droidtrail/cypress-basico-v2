@@ -37,7 +37,7 @@ describe('Central de Atendimento ao Cliente TAT', function () {
         cy.get('.error').should('be.visible')
     });
 
-    it.only('Exibir mensagem de erro quando o telefone se torna obrigatório mas não é preenchido antes do envio do formulário', () => {
+    it('Exibir mensagem de erro quando o telefone se torna obrigatório mas não é preenchido antes do envio do formulário', () => {
         cy.get('#firstName').type('Leandro')
         cy.get('#lastName').type('Pereira')
         cy.get('#email').type('teste@teste.com')
@@ -46,5 +46,36 @@ describe('Central de Atendimento ao Cliente TAT', function () {
         cy.get('#open-text-area').type('8. Digitando em campos e clicando em elementos')
         cy.get('button[type="submit"]').click()
         cy.get('.error').should('be.visible')
+    });
+
+    it.only('Preencher e limpar os campos Nome, Sobrenome, Email e Telefone', () => {
+        cy.get('#firstName')
+            .type('Leandro')
+            .should('have.value','Leandro')
+            .clear().should('have.value','')
+        cy.get('#lastName')
+            .type('Pereira')
+            .should('have.value','Pereira')
+            .clear()
+            .should('have.value','')
+        cy.get('#email')
+            .type('teste@teste.com')
+            .should('have.value','teste@teste.com')
+            .clear()
+            .should('have.value','') 
+        cy.get('#phone')
+            .type('977778888')
+            .should('have.value','977778888')
+            .clear()
+            .should('have.value','')
+        cy.get('#open-text-area')
+            .type('8. Digitando em campos e clicando em elementos')
+            .should('have.value','8. Digitando em campos e clicando em elementos')
+            .clear()
+            .should('have.value','')
+        cy.get('button[type="submit"]')
+            .click()
+        cy.get('.error')
+            .should('be.visible')
     });
 })
