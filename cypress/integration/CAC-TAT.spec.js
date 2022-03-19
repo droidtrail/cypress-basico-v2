@@ -28,11 +28,21 @@ describe('Central de Atendimento ao Cliente TAT', function () {
         cy.get('.error').should('be.visible')
     });
 
-    it.only('Validar campo telefone vazio quando um texto for digitado ', () => {
+    it('Validar campo telefone vazio quando um texto for digitado ', () => {
         cy.get('#firstName').type('Leandro')
         cy.get('#lastName').type('Pereira')
         cy.get('#email').type('testeteste.com') 
-        cy.get('#phone').type('texto').should('have.value','')
+        cy.get('#open-text-area').type('8. Digitando em campos e clicando em elementos')
+        cy.get('button[type="submit"]').click()
+        cy.get('.error').should('be.visible')
+    });
+
+    it.only('Exibir mensagem de erro quando o telefone se torna obrigatório mas não é preenchido antes do envio do formulário', () => {
+        cy.get('#firstName').type('Leandro')
+        cy.get('#lastName').type('Pereira')
+        cy.get('#email').type('teste@teste.com')
+        cy.get('#phone-checkbox').click() 
+        cy.get('#phone').type('texto')
         cy.get('#open-text-area').type('8. Digitando em campos e clicando em elementos')
         cy.get('button[type="submit"]').click()
         cy.get('.error').should('be.visible')
