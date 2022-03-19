@@ -13,27 +13,27 @@ describe('Central de Atendimento ao Cliente TAT', function () {
     it('preenche os campos obrigatórios e envia o formulário', () => {
         cy.get('#firstName').type('Leandro')
         cy.get('#lastName').type('Pereira')
-        cy.get('#email').type('teste@teste.com') 
-        cy.get('#open-text-area').type('8. Digitando em campos e clicando em elementos',{ delay:0 })
-        cy.get('button[type="submit"]').click()
+        cy.get('#email').type('teste@teste.com')
+        cy.get('#open-text-area').type('8. Digitando em campos e clicando em elementos', { delay: 0 })
+        cy.contains('button', 'Enviar').click()
         cy.get('.success').should('be.visible')
     });
 
     it('Exibe mensagem de erro ao submeter o formulário com um email com formatação inválida', () => {
         cy.get('#firstName').type('Leandro')
         cy.get('#lastName').type('Pereira')
-        cy.get('#email').type('testeteste.com') 
+        cy.get('#email').type('testeteste.com')
         cy.get('#open-text-area').type('8. Digitando em campos e clicando em elementos')
-        cy.get('button[type="submit"]').click()
+        cy.contains('button', 'Enviar').click()
         cy.get('.error').should('be.visible')
     });
 
     it('Validar campo telefone vazio quando um texto for digitado ', () => {
         cy.get('#firstName').type('Leandro')
         cy.get('#lastName').type('Pereira')
-        cy.get('#email').type('testeteste.com') 
+        cy.get('#email').type('testeteste.com')
         cy.get('#open-text-area').type('8. Digitando em campos e clicando em elementos')
-        cy.get('button[type="submit"]').click()
+        cy.contains('button', 'Enviar').click()
         cy.get('.error').should('be.visible')
     });
 
@@ -41,46 +41,51 @@ describe('Central de Atendimento ao Cliente TAT', function () {
         cy.get('#firstName').type('Leandro')
         cy.get('#lastName').type('Pereira')
         cy.get('#email').type('teste@teste.com')
-        cy.get('#phone-checkbox').click() 
+        cy.get('#phone-checkbox').click()
         cy.get('#phone').type('texto')
         cy.get('#open-text-area').type('8. Digitando em campos e clicando em elementos')
-        cy.get('button[type="submit"]').click()
+        cy.contains('button', 'Enviar').click()
         cy.get('.error').should('be.visible')
     });
 
     it('Preencher e limpar os campos Nome, Sobrenome, Email e Telefone', () => {
         cy.get('#firstName')
             .type('Leandro')
-            .should('have.value','Leandro')
-            .clear().should('have.value','')
+            .should('have.value', 'Leandro')
+            .clear().should('have.value', '')
         cy.get('#lastName')
             .type('Pereira')
-            .should('have.value','Pereira')
+            .should('have.value', 'Pereira')
             .clear()
-            .should('have.value','')
+            .should('have.value', '')
         cy.get('#email')
             .type('teste@teste.com')
-            .should('have.value','teste@teste.com')
+            .should('have.value', 'teste@teste.com')
             .clear()
-            .should('have.value','') 
+            .should('have.value', '')
         cy.get('#phone')
             .type('977778888')
-            .should('have.value','977778888')
+            .should('have.value', '977778888')
             .clear()
-            .should('have.value','')
+            .should('have.value', '')
         cy.get('#open-text-area')
             .type('8. Digitando em campos e clicando em elementos')
-            .should('have.value','8. Digitando em campos e clicando em elementos')
+            .should('have.value', '8. Digitando em campos e clicando em elementos')
             .clear()
-            .should('have.value','')
-        cy.get('button[type="submit"]')
-            .click()
+            .should('have.value', '')
+        cy.contains('button', 'Enviar').click()
         cy.get('.error')
             .should('be.visible')
     });
 
-    it.only('Exibe mensagem de erro ao submeter o formulário sem preencher os campos obrigatórios', () => {
-        cy.get('button[type="submit"]').click()
+    it('Exibe mensagem de erro ao submeter o formulário sem preencher os campos obrigatórios', () => {
+        cy.contains('button','Enviar').click()
         cy.get('.error').should('be.visible')
+    });
+
+    it('envia o formuário com sucesso usando um comando customizado', () => {
+        cy.fillMandatoryFieldsAndSubmit()
+        cy.get('.success').should('be.visible')
+
     });
 })
