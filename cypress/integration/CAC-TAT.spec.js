@@ -79,7 +79,7 @@ describe('Central de Atendimento ao Cliente TAT', function () {
     });
 
     it('Exibe mensagem de erro ao submeter o formulário sem preencher os campos obrigatórios', () => {
-        cy.contains('button','Enviar').click()
+        cy.contains('button', 'Enviar').click()
         cy.get('.error').should('be.visible')
     });
 
@@ -87,24 +87,24 @@ describe('Central de Atendimento ao Cliente TAT', function () {
         cy.fillMandatoryFieldsAndSubmit()
         cy.get('.success').should('be.visible')
 
-    }); 
+    });
 
     it('seleciona um produto (YouTube) por seu texto', () => {
         cy.get('#product')
             .select('youtube')
-            .should('have.value','youtube')
+            .should('have.value', 'youtube')
     });
 
     it('seleciona um produto (Mentoria) por seu valor (value)', () => {
         cy.get('#product')
             .select('mentoria')
-            .should('have.value','mentoria')
+            .should('have.value', 'mentoria')
     });
 
     it('Seleciona um produto (Blog) por seu índice', () => {
         cy.get('#product')
             .select(1)
-            .should('have.value','blog')
+            .should('have.value', 'blog')
     });
 
     it('Marca o tipo de atendimento "Feedback"', () => {
@@ -114,13 +114,24 @@ describe('Central de Atendimento ao Cliente TAT', function () {
             .should('have.value', 'feedback')
     });
 
-    it.only('Marca cada tipo de atendimento', () => {
+    it('Marca cada tipo de atendimento', () => {
         cy.get('input[type="radio"]')
-            .should('have.length',3)
-            .each(function($radio){
+            .should('have.length', 3)
+            .each(function ($radio) {
                 cy.wrap($radio)
                     .check()
                     .should('be.checked')
             })
+    });
+
+    it.only('Marca ambos checkboxes, depois desmarca o último', () => {
+        cy.get('input[type="checkbox"]')
+            .check()
+            .should('be.checked')
+            .last()
+            .uncheck()
+            .should('not.be.checked')
+            
+            
     });
 })
