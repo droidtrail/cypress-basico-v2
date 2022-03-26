@@ -141,4 +141,13 @@ describe('Central de Atendimento ao Cliente TAT', function () {
               expect($input[0].files[0].name).to.equal('cypress.png')
           })
     });
+
+    it('seleciona um arquivo simulando um drag-and-drop', () => {
+        cy.get('#file-upload')
+          .should('not.have.value')
+          .selectFile('./cypress/fixtures/img/cypress.png')
+          .should(function($input){
+              expect($input[0].files[0].name).to.equal('cypress.png', {action: 'drag-drop'})
+          })
+    });
 })
