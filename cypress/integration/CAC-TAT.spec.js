@@ -130,24 +130,37 @@ describe('Central de Atendimento ao Cliente TAT', function () {
             .should('be.checked')
             .last()
             .uncheck()
-            .should('not.be.checked')        
+            .should('not.be.checked')
     });
 
-    it.only('Seleciona um arquivo da pasta fixtures', () => {
+    it('Seleciona um arquivo da pasta fixtures', () => {
         cy.get('#file-upload')
-          .should('not.have.value')
-          .selectFile('./cypress/fixtures/img/cypress.png')
-          .should(function($input){
-              expect($input[0].files[0].name).to.equal('cypress.png')
-          })
+            .should('not.have.value')
+            .selectFile('./cypress/fixtures/img/cypress.png')
+            .should(function ($input) {
+                expect($input[0].files[0].name).to.equal('cypress.png')
+            })
     });
 
     it('seleciona um arquivo simulando um drag-and-drop', () => {
         cy.get('#file-upload')
-          .should('not.have.value')
-          .selectFile('./cypress/fixtures/img/cypress.png')
-          .should(function($input){
-              expect($input[0].files[0].name).to.equal('cypress.png', {action: 'drag-drop'})
-          })
+            .should('not.have.value')
+            .selectFile('./cypress/fixtures/img/cypress.png')
+            .should(function ($input) {
+                expect($input[0].files[0].name).to.equal('cypress.png', { action: 'drag-drop' })
+            })
+    });
+
+    it('seleciona um arquivo utilizando uma fixture para a qual foi dada um alias', () => {
+        cy.fixture('example.json').as('sampleFile')
+        cy.get('#file-upload')
+            .selectFile('@sampleFile')
+            .should(function ($input) {
+                expect($input[0].files[0].name).to.equal('example.json', { action: 'drag-drop' })
+            })
+    });
+
+    it.only('verifica que a política de privacidade abre em outra aba sem a necessidade de um clique', () => {
+        cy.get('#privacy a').should('have.attr','target','_blank')
     });
 })
