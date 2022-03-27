@@ -169,7 +169,7 @@ describe('Central de Atendimento ao Cliente TAT', function () {
             .invoke('removeAttr','target')
             .click()
 
-        cy.contains('Talking About Testin').should('be.visible')
+        cy.contains('casa').should('be.visible')
     });
 
     
