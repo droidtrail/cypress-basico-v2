@@ -34,8 +34,8 @@ describe('Central de Atendimento ao Cliente TAT', function () {
         cy.get('.error').should('not.be.visible')
     });
 
-    Cypress._.times(100, function () {
-        it.only('Validar campo telefone vazio quando um texto for digitado ', () => {
+    Cypress._.times(5, function () {
+        it('Validar campo telefone vazio quando um texto for digitado ', () => {
             cy.get('#firstName').type('Leandro')
             cy.get('#lastName').type('Pereira')
             cy.get('#email').type('testeteste.com')
