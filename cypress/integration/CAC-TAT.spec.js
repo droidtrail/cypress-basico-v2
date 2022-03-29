@@ -223,4 +223,17 @@ describe('Central de Atendimento ao Cliente TAT', function () {
             })
     });
 
+    it.only('encontra o gato escondido', () => {
+        cy.get('#cat')
+            .should('not.be.visible')
+            .invoke('show')
+            .should('be.visible')
+
+        cy.get('#title')
+            .invoke('text','CAT TAT')
+
+        cy.get('#subtitle')
+            .invoke('text','Eu 💚 gatos')
+    });
+
 })
